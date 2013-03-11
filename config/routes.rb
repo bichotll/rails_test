@@ -1,13 +1,17 @@
 Homestay::Application.routes.draw do
   resources :bookings
 
+  # Route for start action
+  #match '/rooms/aval/:params', :controller => 'rooms', :action => 'aval'
+  match 'rooms/aval' => 'rooms#aval', :via => :get
+  # Default mapping of routes for the scaffold
 
-  resources :rooms
-
-
+  #resources :rooms
+  
+  
   resources :hosts
 
-
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

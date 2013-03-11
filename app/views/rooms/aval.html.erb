@@ -1,0 +1,32 @@
+<%= form_tag "/rooms/aval", :method => "get" do %>
+  start_date: <%= text_field_tag :start_date, params[:start_date], :value => '2013-06-01' %>
+  <br>
+  end_date: <%= text_field_tag :end_date, params[:end_date], :value => '2013-06-07' %>
+  <br>
+  guests: <%= text_field_tag :guests, params[:guests], :value => '1' %>
+  <br>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+
+
+<hr>
+
+<h1>Listing rooms</h1>
+
+<% @rooms.each do |room| %>
+
+  <% if $t_host != room.host.name  %>
+    <br>
+    <h3>host#<%= room.host.id %>: <%= room.host.name %></h3>
+    <%= room.host.address  %>
+  <% end %>
+
+  <p>room#<%= room.id %> is available (<%= Integer(room.number_of_guests) + 0 %> booked, <%= Integer(room.capacity) - Integer(room.number_of_guests) %> free out of <%= room.capacity %> total)</p>
+
+  <% $t_host = room.host.name %>
+
+<% end %>
+
+  <br><br>
+  
+<%= will_paginate @rooms %>
